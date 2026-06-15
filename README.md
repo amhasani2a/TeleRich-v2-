@@ -2,8 +2,9 @@
    
 # 🤖 Telegram [Rich Markdown](https://core.telegram.org/bots/api#rich-message-formatting-options) & HTML Bot
 
-
-Bot API **10.1** • Live Demo Bot: [@MarkdownRenderBot](https://t.me/MarkdownRenderBot)‌‌
+<a href="#english-version-us">🇺🇸 English</a> | <a href="#نسخه-فارسی-ir">🇮🇷 فارسی</a>
+  
+Live Demo Bot: [@MarkdownRenderBot](https://t.me/MarkdownRenderBot)
 
 [![GitHub Repo](https://img.shields.io/badge/Repo-TeleRich-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DarknessShade/TeleRich)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
@@ -20,10 +21,11 @@ Bot API **10.1** • Live Demo Bot: [@MarkdownRenderBot](https://t.me/MarkdownRe
 </div>
 
 ---
-
+<a id="english-version-us"></a>
 ## 🇬🇧 English
 
 ### ✨ Overview
+#### Use this code to send rendered messages inside your channel [Code and tutorial link](https://github.com/DarknessShade/TeleRich/tree/main/Channel%20Forwarder%20Bot)
 
 A lightweight, serverless **Telegram bot** running entirely on **Cloudflare Workers**. Send it any **Markdown** or **HTML** text and it instantly echoes it back as a beautifully rendered **Rich Message**, using Telegram's Bot API 10.1 `sendRichMessage` / `rich_message` formatting layer.
 
@@ -161,10 +163,13 @@ Created by **ÐΛɌ₭ᑎΞ𐒡𐒡** — [GitHub](https://github.com/DarknessSh
 
 ---
 ---
-
+<a id="نسخه-فارسی-ir"></a>
 ## 🇮🇷 فارسی
 
 ### ✨ معرفی
+#### نمونه ربات اجرا شده: [@MarkdownRenderBot](https://t.me/MarkdownRenderBot)
+
+#### برای ارسال پیام های رندر شده داخل کانال خودتون از این کد استفاده کنید [لینک کد و آموزش](https://github.com/DarknessShade/TeleRich/tree/main/Channel%20Forwarder%20Bot)
 
 یک **بات تلگرام** سبک و کاملاً **سرورلس** که روی **Cloudflare Workers** اجرا می‌شود. هر متن **Markdown** یا **HTML** که برایش بفرستید را فوراً به صورت یک **Rich Message** زیبا و رندر‌شده برمی‌گرداند؛ این کار با استفاده از قابلیت `sendRichMessage` / `rich_message` در **Bot API نسخه 10.1** تلگرام انجام می‌شود.
 
