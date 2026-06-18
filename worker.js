@@ -17,8 +17,8 @@
  * 6) Tag Render Settings: Per-channel toggle for specific tags via glass buttons.
  */
 
-const BOT_TOKEN = "TOKEN BOT IN PLACE"; // ⚠️ revoke the leaked one
-const ADMIN_ID = 12345678987; // admin user id
+const BOT_TOKEN = "TOKEN IN PLACE"; 
+const ADMIN_ID = 112345678895; // admin user id
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 const TTL_PROCESSED_SEC = 30 * 24 * 60 * 60; // 30 days
 const TTL_CHANNEL_SEC = 30 * 24 * 60 * 60;   // 30 days
@@ -667,6 +667,22 @@ function renderUserText(rawText, entities, config) {
 }
 
 function applyCustomSyntax(text, config) {
+	// Mask code blocks to protect them from regex replacements
+	const codeBlocks = [];
+	text = text.replace(/(```[\s\S]*?```|\/\/\/[\s\S]*?\/\/\/)/g, match => {
+		codeBlocks.push(match);
+		return `\u0000CB${codeBlocks.length - 1}\u0000`;
+	});
+
+	// Disable standard Markdown headings (inserts Zero-Width Space so parser ignores them)
+	text = text.replace(/(^|\n)([ \t>]*)(#{1,6})([ \t]+)/g, "$1$2$3\u200B$4");
+
+	// Enable custom `#_ ` heading syntax
+	text = text.replace(/(^|\n)([ \t>]*)(#{1,6})_([ \t]+)/g, "$1$2$3$4");
+
+	// Restore code blocks
+	text = text.replace(/\u0000CB(\d+)\u0000/g, (_, i) => codeBlocks[Number(i)]);
+
 	if (config.quote) {
 		text = applyPullQuote(text);
 	}
@@ -755,7 +771,7 @@ function hasRealFormatting(t) {
 		/\[(?:نقشه|map)\s*:/.test(t) ||
 		/\[(?:اسلایدشو|slideshow|کلاژ|collage|کشویی|expand)\]/.test(t) ||
 		/[🙈🔽]/.test(t) ||
-		/(^|\n)\s{0,3}#{1,6}\s+\S/.test(t) ||
+		/(^|\n)[ \t>]*#{1,6}_\s+\S/.test(t) ||
 		/(^|\n)\s*[-*+]\s*\[[ xX]\]\s+\S/.test(t) ||
 		/(^|\n)\s*[-*+]\s+\S/.test(t) ||
 		/(^|\n)\s*\d+\.\s+\S/.test(t) ||
@@ -963,7 +979,7 @@ const HELP_CHANNEL_TAGS = {
 		"",
 		"---",
 		"## ✅ روی پیام متنی کانال کار می‌کند",
-		"- هدینگ (`# عنوان`)، نقل‌قول (`> ...`)",
+		"- هدینگ (`#_ عنوان`)، نقل‌قول (`> ...`)",
 		"- لیست و تسک (`- [ ]` و `- [x]`)",
 		"- جدول، بلوک کد، و فرمول (`$...$` و `$$...$$`)",
 		"- بلوک کشویی `<details>` و اسپویلر `<tg-spoiler>`",
@@ -995,7 +1011,7 @@ const HELP_CHANNEL_TAGS = {
 		"",
 		"---",
 		"## ✅ Works on channel text posts",
-		"- Headings (`# Title`), quotes (`> ...`)",
+		"- Headings (`#_ Title`), quotes (`> ...`)",
 		"- Lists & tasks (`- [ ]`, `- [x]`)",
 		"- Tables, code blocks, formulas (`$...$`, `$$...$$`)",
 		"- Expandable `<details>` and `<tg-spoiler>`",
@@ -1027,9 +1043,9 @@ const HELP_MD = {
 		"---",
 		"## هدینگ",
 		"```",
-		"# هدینگ ۱",
-		"## هدینگ ۲",
-		"### هدینگ ۳",
+		"#_ هدینگ ۱",
+		"##_ هدینگ ۲",
+		"###_ هدینگ ۳",
 		"```",
 		"",
 		"---",
@@ -1077,9 +1093,9 @@ const HELP_MD = {
 		"---",
 		"## Headings",
 		"```",
-		"# Heading 1",
-		"## Heading 2",
-		"### Heading 3",
+		"#_ Heading 1",
+		"##_ Heading 2",
+		"###_ Heading 3",
 		"```",
 		"",
 		"---",
